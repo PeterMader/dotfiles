@@ -5,11 +5,6 @@
 set nocompatible           
 filetype off                  
 
-" load the plugins in ~/.vim/bundle (on Windows: %USERPROFILE%\vimfiles\bundle)
-" execute pathogen#infect() 
-
-" execute pathogen#helptags()
-
 filetype plugin indent on
 
 set noerrorbells visualbell t_vb=
@@ -28,6 +23,10 @@ set softtabstop=4
 set shiftwidth=4
 " On pressing tab, insert 4 spaces
 set expandtab
+
+" exchange ; and ,
+nnoremap ; ,
+nnoremap , ;
 
 " move vertically by visual line
 nnoremap j gj
