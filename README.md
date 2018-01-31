@@ -9,7 +9,7 @@ Currently, this repo only contains my `.vimrc`, the `.vim` folder and the
 
 ```shell
 
-git clone --recursive git://github.com/PeterMader/dotfiles.git
+git clone --recursive https://github.com/PeterMader/dotfiles.git
 cd dotfiles
 ./install.sh
 
