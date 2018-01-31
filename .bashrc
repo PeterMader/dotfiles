@@ -120,6 +120,3 @@ mkcd () {
     mkdir -p $1
     cd $1
 }
-
-# tell Vim where to look for the vimrc file
-export VIMINIT="source ~/.vim/.vimrc"
