@@ -1,0 +1,2 @@
+# ignore the netrw history file
+.vim/.netrwhist
