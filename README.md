@@ -11,6 +11,6 @@ Currently, this repo only contains my `.vimrc`, the `.vim` folder and the
 
 git clone --recursive https://github.com/PeterMader/dotfiles.git
 cd dotfiles
-./install.sh
+source ./install.sh
 
 ```
