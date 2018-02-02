@@ -4,3 +4,6 @@
 [submodule ".vim/pack/plugins/start/vim-hardtime"]
 	path = .vim/pack/plugins/start/vim-hardtime
 	url = git://github.com/takac/vim-hardtime.git
+[submodule ".vim/pack/plugins/start/Apprentice"]
+	path = .vim/pack/plugins/start/Apprentice
+	url = https://github.com/romainl/Apprentice

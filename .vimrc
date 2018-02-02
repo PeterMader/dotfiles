@@ -2,7 +2,7 @@
 
 " be iMproved, no vi compatibility
 set nocompatible           
-filetype off                  
+filetype off
 
 filetype plugin indent on
 
@@ -13,6 +13,19 @@ autocmd BufWinEnter * set number
 
 " important! In order to display umlauts correctly
 set encoding=utf-8
+
+" set the GUI font
+if has("gui_running")
+    colorscheme apprentice
+
+    if has("gui_gtk2")
+        set guifont=Inconsolata\ 12
+    elseif has("gui_macvim")
+        set guifont=Menlo\ Regular:h14
+    elseif has("gui_win32")
+        set guifont=Consolas:h12:cANSI
+    endif
+endif
 
 if has('win32')
     " default file format in Windows
@@ -82,9 +95,6 @@ set rulerformat=%55(%{strftime('%H:%M:%S\ %p')}\ %5l,%-6(%c%V%)\ %P%)
 
 " show the status line
 set laststatus=1
-
-" set the color theme
-colorscheme default
 
 " enable syntax highlighting
 syntax enable
