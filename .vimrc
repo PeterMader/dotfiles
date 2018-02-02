@@ -1,5 +1,4 @@
 " Peter Mader's .vimrc 
-" interesting: https://github.com/bfontaine/Dotfiles/blob/master/.vimrc
 
 " be iMproved, no vi compatibility
 set nocompatible           
@@ -9,12 +8,23 @@ filetype plugin indent on
 
 set noerrorbells visualbell t_vb=
 autocmd GUIEnter * set visualbell t_vb=
+" display numbers in every buffer
 autocmd BufWinEnter * set number
 
 " important! In order to display umlauts correctly
 set encoding=utf-8
-" default file types: UNIX
-set fileformat=unix
+
+if has('win32')
+    " default file format in Windows
+    set fileformat=dos
+
+    " in Unix, Ctrl-Z pauses Vim and puts the shell in the foreground
+    " this imitates this feature on Windows
+    noremap <Ctrl-Z> :sh<CR>
+else
+    " default file types: UNIX
+    set fileformat=unix
+endif
 
 " show existing tab with 4 spaces width
 set tabstop=4
@@ -66,7 +76,7 @@ set wildmenu
 " search as characters are entered
 set incsearch
 
-" show the ruler (info like cursor position)
+" show the ruler (info like cursor position and current time)
 set ruler
 set rulerformat=%55(%{strftime('%H:%M:%S\ %p')}\ %5l,%-6(%c%V%)\ %P%)
 
@@ -82,3 +92,7 @@ syntax enable
 " mark text after the 80th column in red
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 match OverLength /\%81v.\+/
+
+
+set ignorecase
+set smartcase
