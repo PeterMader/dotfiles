@@ -14,10 +14,21 @@ autocmd BufWinEnter * set number
 " important! In order to display umlauts correctly
 set encoding=utf-8
 
-" set the GUI font
+" GUI options
 if has("gui_running")
     colorscheme apprentice
 
+    set guioptions-=m  "remove menu bar
+    set guioptions-=T  "remove toolbar
+    set guioptions-=r  "remove right-hand scroll bar
+    set guioptions-=L  "remove left-hand scroll bar
+
+    " maximize the GUI window
+    " this does *not* maximize the window
+    " TODO: find a way to maximize the window platform-independently.
+    set lines=999 columns=999
+
+    " set the GUI font
     if has("gui_gtk2")
         set guifont=Inconsolata\ 12
     elseif has("gui_macvim")

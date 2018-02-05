@@ -7,3 +7,6 @@
 [submodule ".vim/pack/plugins/start/Apprentice"]
 	path = .vim/pack/plugins/start/Apprentice
 	url = https://github.com/romainl/Apprentice
+[submodule ".vim/pack/plugins/start/rust.vim"]
+	path = .vim/pack/plugins/start/rust.vim
+	url = https://github.com/rust-lang/rust.vim
