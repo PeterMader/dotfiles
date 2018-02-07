@@ -14,6 +14,9 @@ autocmd BufWinEnter * set number
 " important! In order to display umlauts correctly
 set encoding=utf-8
 
+" hide abandoned buffers
+set hidden
+
 " GUI options
 if has("gui_running")
     colorscheme apprentice
@@ -38,7 +41,7 @@ if has("gui_running")
     endif
 endif
 
-if has('win32')
+if has("win32")
     " default file format in Windows
     set fileformat=dos
 
@@ -57,6 +60,15 @@ set softtabstop=4
 set shiftwidth=4
 " On pressing tab, insert 4 spaces
 set expandtab
+
+" set the leader key to ö
+let mapleader="ö"
+
+nnoremap <Leader>ü :call feedkeys(":buffer<space><tab>", "t")<cr>
+nnoremap <Leader>l :bprevious<cr>
+nnoremap <Leader>ä :bnext<cr>
+
+nnoremap ü <Esc>l
 
 " exchange ; and ,
 nnoremap ; ,
@@ -114,6 +126,18 @@ syntax enable
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 match OverLength /\%81v.\+/
 
-
 set ignorecase
 set smartcase
+
+function! MoveFile(newspec)
+     let old = expand('%')
+
+     if (old == a:newspec)
+         return 0
+     endif
+
+     execute 'saveas' fnameescape(a:newspec)
+     call delete(old)
+endfunction
+
+command! -nargs=1 -complete=file -bar MoveFile call MoveFile('<args>')
