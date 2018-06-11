@@ -2,14 +2,11 @@
 
 " be iMproved, no vi compatibility
 set nocompatible           
-filetype off
 
 filetype plugin indent on
 
 set noerrorbells visualbell t_vb=
 autocmd GUIEnter * set visualbell t_vb=
-" display numbers in every buffer
-autocmd BufWinEnter * set number
 
 " important! In order to display umlauts correctly
 set encoding=utf-8
@@ -32,12 +29,12 @@ if has("gui_running")
     set lines=999 columns=999
 
     " set the GUI font
-    if has("gui_gtk2")
-        set guifont=Inconsolata\ 12
-    elseif has("gui_macvim")
+    if has("gui_macvim")
         set guifont=Menlo\ Regular:h14
     elseif has("gui_win32")
         set guifont=Consolas:h12:cANSI
+    else
+        set guifont=Inconsolata\ 12
     endif
 endif
 
@@ -64,11 +61,15 @@ set expandtab
 " set the leader key to ö
 let mapleader="ö"
 
-nnoremap <Leader>ü :call feedkeys(":buffer<space><tab>", "t")<cr>
+nnoremap <Leader>ü :ls<cr>:buffer<space>
 nnoremap <Leader>l :bprevious<cr>
 nnoremap <Leader>ä :bnext<cr>
 
-nnoremap ü <Esc>l
+nnoremap <Leader>w :w<cr>
+nnoremap <Leader># :b#<cr>
+nnoremap Q gqip
+
+cnoremap %% %:h
 
 " exchange ; and ,
 nnoremap ; ,
@@ -78,13 +79,17 @@ nnoremap , ;
 nnoremap j gj
 nnoremap k gk
 
-" enable vim-hardtime by default
-" this will set a delay on the hjkl keys so that they cannot be used repeatedly
-let g:hardtime_default_on = 1
+inoremap jk <ESC>
+inoremap kj <ESC>
 
-" Ctrl-k moves a line up, Ctrl-j moves a line down
-noremap <silent> <c-k> :m -2<cr>
-noremap <silent> <c-j> :m +1<cr>
+" fix Y so that is behaves like D
+map Y y$
+
+" use ctrl+HJKL to move window focus
+noremap <c-h> <c-w>h
+noremap <c-j> <c-w>j
+noremap <c-k> <c-w>k
+noremap <c-l> <c-w>l
 
 " disable the arrow keys
 inoremap <up>    <NOP>
@@ -97,14 +102,16 @@ noremap <down>  <NOP>
 noremap <left>  <NOP>
 noremap <right> <NOP>
 
+inoremap <Space><Tab> <Esc>/<++><Enter>"_c4l
+vnoremap <Space><Tab> <Esc>/<++><Enter>"_c4l
+map <Space><Tab> <Esc>/<++><Enter>"_c4l
+
 " keep at least 3 lines above or below the cursor
 set scrolloff=3
 
-" open files given as command line arguments in their own tabs
-tab all
-
-" show line numbers
+" show hybrid line numbers
 set number
+set relativenumber
 
 " visual autocomplete for command menu
 set wildmenu
@@ -141,3 +148,8 @@ function! MoveFile(newspec)
 endfunction
 
 command! -nargs=1 -complete=file -bar MoveFile call MoveFile('<args>')
+
+augroup templates
+    autocmd BufNewFile *.tex 0r ~/dotfiles/templates/latex-template.tex
+    autocmd BufNewFile *.html 0r ~/dotfiles/templates/html-template.html
+augroup END
