@@ -18,10 +18,10 @@ set hidden
 if has("gui_running")
     colorscheme apprentice
 
-    set guioptions-=m  "remove menu bar
-    set guioptions-=T  "remove toolbar
-    set guioptions-=r  "remove right-hand scroll bar
-    set guioptions-=L  "remove left-hand scroll bar
+    set guioptions-=m  " remove menu bar
+    set guioptions-=T  " remove toolbar
+    set guioptions-=r  " remove right-hand scroll bar
+    set guioptions-=L  " remove left-hand scroll bar
 
     " maximize the GUI window
     " this does *not* maximize the window
@@ -136,20 +136,14 @@ match OverLength /\%81v.\+/
 set ignorecase
 set smartcase
 
-function! MoveFile(newspec)
-     let old = expand('%')
-
-     if (old == a:newspec)
-         return 0
-     endif
-
-     execute 'saveas' fnameescape(a:newspec)
-     call delete(old)
-endfunction
-
-command! -nargs=1 -complete=file -bar MoveFile call MoveFile('<args>')
-
-augroup templates
-    autocmd BufNewFile *.tex 0r ~/dotfiles/templates/latex-template.tex
-    autocmd BufNewFile *.html 0r ~/dotfiles/templates/html-template.html
-augroup END
+if has('win32')
+    augroup templates
+        autocmd BufNewFile *.tex 0r $HOME/dotfiles/templates/latex-template.tex
+        autocmd BufNewFile *.html 0r $HOME/dotfiles/templates/html-template.html
+    augroup END
+else 
+    augroup templates
+        autocmd BufNewFile *.tex 0r ~/dotfiles/templates/latex-template.tex
+        autocmd BufNewFile *.html 0r ~/dotfiles/templates/html-template.html
+    augroup END
+endif
