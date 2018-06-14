@@ -14,10 +14,11 @@ set encoding=utf-8
 " hide abandoned buffers
 set hidden
 
+set background=dark
+colorscheme apprentice
+
 " GUI options
 if has("gui_running")
-    colorscheme apprentice
-
     set guioptions-=m  " remove menu bar
     set guioptions-=T  " remove toolbar
     set guioptions-=r  " remove right-hand scroll bar
@@ -36,6 +37,8 @@ if has("gui_running")
     else
         set guifont=Inconsolata\ 12
     endif
+else
+    set t_Co=256
 endif
 
 if has("win32")
@@ -68,6 +71,16 @@ nnoremap <Leader>ä :bnext<cr>
 nnoremap <Leader>w :w<cr>
 nnoremap <Leader># :b#<cr>
 nnoremap Q gqip
+
+" <Leader>v opens .vimrc
+nnoremap <Leader>v :tabedit ~/dotfiles/.vimrc<cr>
+
+" <Space><Space> deactivates hlsearch
+nnoremap <silent> <Space><Space> :noh<cr>
+
+" center search matches
+nnoremap N Nzz
+nnoremap n nzz
 
 cnoremap %% %:h
 
@@ -118,6 +131,9 @@ set wildmenu
 
 " search as characters are entered
 set incsearch
+
+" highlight search matches
+set hlsearch
 
 " show the ruler (info like cursor position and current time)
 set ruler
