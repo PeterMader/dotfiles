@@ -14,6 +14,9 @@ set encoding=utf-8
 " hide abandoned buffers
 set hidden
 
+" do not redraw in macros
+set lazyredraw
+
 " GUI options
 if has("gui_running")
     colorscheme apprentice
@@ -83,7 +86,13 @@ inoremap jk <ESC>
 inoremap kj <ESC>
 
 " fix Y so that is behaves like D
-map Y y$
+noremap Y y$
+
+" <leader>. to repeat the last ex command
+noremap <Leader>. @:
+
+" <leader>q to repeat the last macro
+noremap <Leader>q @@
 
 " use ctrl+HJKL to move window focus
 noremap <c-h> <c-w>h
@@ -105,6 +114,15 @@ noremap <right> <NOP>
 inoremap <Space><Tab> <Esc>/<++><Enter>"_c4l
 vnoremap <Space><Tab> <Esc>/<++><Enter>"_c4l
 map <Space><Tab> <Esc>/<++><Enter>"_c4l
+
+augroup easy_close
+    autocmd!
+    " close quickfix & help with q
+    autocmd FileType help,qf nnoremap <buffer> q :q<cr>
+    " <c-t> instead of <ctrl-]>, which cannot 
+    " be typed on many keyboards
+    autocmd FileType help nnoremap <buffer> <c-t> <c-]>
+augroup END
 
 " keep at least 3 lines above or below the cursor
 set scrolloff=3
