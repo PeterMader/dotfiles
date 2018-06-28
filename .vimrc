@@ -180,5 +180,6 @@ else
     augroup templates
         autocmd BufNewFile *.tex 0r ~/dotfiles/templates/latex-template.tex
         autocmd BufNewFile *.html 0r ~/dotfiles/templates/html-template.html
+        autocmd BufNewFile *.md 0r ~/dotfiles/templates/markdown-template.md
     augroup END
 endif
