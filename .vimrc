@@ -125,7 +125,6 @@ noremap <down>  <NOP>
 noremap <left>  <NOP>
 noremap <right> <NOP>
 
-inoremap <Space><Tab> <Esc>/<++><Enter>"_c4l
 vnoremap <Space><Tab> <Esc>/<++><Enter>"_c4l
 map <Space><Tab> <Esc>/<++><Enter>"_c4l
 
