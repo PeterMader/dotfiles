@@ -187,3 +187,29 @@ else
         autocmd BufNewFile *.md 0r ~/dotfiles/templates/markdown-template.md
     augroup END
 endif
+
+function! s:set_makeprg (...)
+    let prg = join(a:000)
+    let prgescaped = substitute(join(a:000), ' ', '\\ ', 'g')
+    exe "setlocal makeprg=" . prgescaped
+    echo "'makeprg' set to '" . prg . "'"
+endfunction
+
+function! ToggleAutoBuild()
+    if !exists('#AutoBuild#BufWritePost')
+        augroup AutoBuild
+            autocmd! * <buffer>
+            autocmd BufWritePost <buffer> silent make
+        augroup END
+    else
+        augroup AutoBuild
+            autocmd!
+        augroup END
+    endif
+endfunction
+
+command! AutoBuild call ToggleAutoBuild()
+command! -nargs=1 SetMake call s:set_makeprg(<f-args>)
+noremap <Leader>pc :SetMake pandoc % -o .pdf<Left><Left><Left><Left>
+noremap <Leader>ab :AutoBuild<CR>
+noremap <Leader>m :make<CR>
