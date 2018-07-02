@@ -39,7 +39,7 @@ if has("gui_running")
     elseif has("gui_win32")
         set guifont=Consolas:h12:cANSI
     else
-        set guifont=Inconsolata\ 12
+        set guifont=Inconsolata\ 13
     endif
 else
     set t_Co=256
@@ -77,7 +77,7 @@ nnoremap <Leader># :b#<cr>
 nnoremap Q gqip
 
 " <Leader>v opens .vimrc
-nnoremap <Leader>v :tabedit ~/dotfiles/.vimrc<cr>
+nnoremap <Leader>v :tabedit ~/dotfiles/.vim/vimrc<cr>
 
 " <Space><Space> deactivates hlsearch
 nnoremap <silent> <Space><Space> :noh<cr>
@@ -107,6 +107,10 @@ noremap <Leader>. @:
 
 " <leader>q to repeat the last macro
 noremap <Leader>q @@
+
+" experimental: Enter for : (starting ex commands)
+nnoremap <cr> :
+vnoremap <cr> :
 
 " use ctrl+HJKL to move window focus
 noremap <c-h> <c-w>h
@@ -172,8 +176,9 @@ set smartcase
 
 if has('win32')
     augroup templates
-        autocmd BufNewFile *.tex 0r $HOME/dotfiles/templates/latex-template.tex
-        autocmd BufNewFile *.html 0r $HOME/dotfiles/templates/html-template.html
+        autocmd BufNewFile *.tex 0r $HOME\dotfiles\templates\latex-template.tex
+        autocmd BufNewFile *.html 0r $HOME\dotfiles\templates\html-template.html
+        autocmd BufNewFile *.md 0r $HOME\dotfiles\templates\markdown-template.md
     augroup END
 else 
     augroup templates
