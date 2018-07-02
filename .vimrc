@@ -174,6 +174,7 @@ if has('win32')
     augroup templates
         autocmd BufNewFile *.tex 0r $HOME/dotfiles/templates/latex-template.tex
         autocmd BufNewFile *.html 0r $HOME/dotfiles/templates/html-template.html
+        autocmd BufNewFile *.md 0r $HOME/dotfiles/templates/markdown-template.md
     augroup END
 else 
     augroup templates
