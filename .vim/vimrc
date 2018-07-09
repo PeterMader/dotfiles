@@ -159,7 +159,7 @@ set hlsearch
 
 " show the ruler (info like cursor position and current time)
 set ruler
-set rulerformat=%55(%{strftime('%H:%M:%S\ %p')}\ %5l,%-6(%c%V%)\ %P%)
+set rulerformat=%55(%5l,%-6(%c%V%)\ %P%)
 
 " show the status line
 set laststatus=1
@@ -199,7 +199,7 @@ function! ToggleAutoBuild()
     if !exists('#AutoBuild#BufWritePost')
         augroup AutoBuild
             autocmd! * <buffer>
-            autocmd BufWritePost <buffer> silent make
+            autocmd BufWritePost <buffer> exe "make\|redraw!"
         augroup END
     else
         augroup AutoBuild
@@ -210,6 +210,9 @@ endfunction
 
 command! AutoBuild call ToggleAutoBuild()
 command! -nargs=1 SetMake call s:set_makeprg(<f-args>)
-noremap <Leader>pc :SetMake pandoc % -o .pdf<Left><Left><Left><Left>
+
 noremap <Leader>ab :AutoBuild<CR>
-noremap <Leader>m :make<CR>
+noremap <Leader>m :make\|redraw!<CR>
+
+" <Leader>pc to set makeprg to pandoc
+noremap <Leader>pc :SetMake pandoc % -o .pdf<Left><Left><Left><Left>
