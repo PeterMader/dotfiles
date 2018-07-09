@@ -99,6 +99,12 @@ nnoremap k gk
 inoremap jk <ESC>
 inoremap kj <ESC>
 
+" <Meta-j> for a newline below,
+" <Meta-k> for a newline above
+" the current line
+noremap <M-j> o<ESC>
+noremap <M-k> O<ESC>
+
 " fix Y so that is behaves like D
 noremap Y y$
 
