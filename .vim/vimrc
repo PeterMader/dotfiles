@@ -1,12 +1,15 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Peter Mader's .vimrc 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" be iMproved, no vi compatibility
-set nocompatible           
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" OPTIONS
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 filetype plugin indent on
 
+" disable beeps
 set noerrorbells visualbell t_vb=
-autocmd GUIEnter * set visualbell t_vb=
 
 " important! In order to display umlauts correctly
 set encoding=utf-8
@@ -17,9 +20,15 @@ set hidden
 " do not redraw in macros
 set lazyredraw
 
+" do not wrap long lines by default
+set nowrap
+
 " set colorscheme
 set background=dark
-colorscheme apprentice
+colorscheme gruvbox
+
+" enable syntax highlighting
+syntax enable
 
 " GUI options
 if has("gui_running")
@@ -58,12 +67,53 @@ else
 endif
 
 " show existing tab with 4 spaces width
-set tabstop=4
-set softtabstop=4
+set tabstop=4 softtabstop=4
+
 " when indenting with '>', use 4 spaces width
 set shiftwidth=4
-" On pressing tab, insert 4 spaces
+
+" on pressing tab, insert the correct amount of spaces
 set expandtab
+
+" keep at least 3 lines above or below the cursor
+set scrolloff=3
+
+" show hybrid line numbers
+set number relativenumber
+
+" visual autocomplete for command menu
+set wildmenu
+
+" search as characters are entered
+set incsearch
+
+" highlight search matches
+set hlsearch
+
+" show the ruler (info like cursor position and current time)
+set ruler
+set rulerformat=%55(%5l/%-L,%-6(%c%V%)\ %P%)
+
+" show the status line
+set laststatus=1
+
+" mark text after the 80th column in red
+highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+match OverLength /\%81v./
+
+set ignorecase
+set smartcase
+
+" set swapfile directory
+if has('win32')
+    set directory=$HOME\vimfiles\swapfiles\\
+else
+    set directory=$HOME/.vim/swapfiles//
+endif
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" MAPPINGS
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " set the leader key to ö
 let mapleader="ö"
@@ -72,7 +122,7 @@ nnoremap <Leader>ü :ls<cr>:buffer<space>
 nnoremap <Leader>l :bprevious<cr>
 nnoremap <Leader>ä :bnext<cr>
 
-nnoremap <Leader>w :w<cr>
+nnoremap <Leader>w :up<cr>
 nnoremap <Leader># :b#<cr>
 nnoremap Q gqip
 
@@ -99,11 +149,13 @@ nnoremap k gk
 inoremap jk <ESC>
 inoremap kj <ESC>
 
-" <Meta-j> for a newline below,
-" <Meta-k> for a newline above
+" <Meta-j> and <leader>j for a newline below,
+" <Meta-k> and <leader>k for a newline above
 " the current line
-noremap <M-j> o<ESC>
 noremap <M-k> O<ESC>
+noremap <M-j> o<ESC>
+noremap <Leader>k O<ESC>
+noremap <Leader>o o<ESC>
 
 " fix Y so that is behaves like D
 noremap Y y$
@@ -146,40 +198,6 @@ augroup easy_close
     " be typed on many keyboards
     autocmd FileType help nnoremap <buffer> <c-t> <c-]>
 augroup END
-
-" keep at least 3 lines above or below the cursor
-set scrolloff=3
-
-" show hybrid line numbers
-set number
-set relativenumber
-
-" visual autocomplete for command menu
-set wildmenu
-
-" search as characters are entered
-set incsearch
-
-" highlight search matches
-set hlsearch
-
-" show the ruler (info like cursor position and current time)
-set ruler
-set rulerformat=%55(%5l,%-6(%c%V%)\ %P%)
-
-" show the status line
-set laststatus=1
-
-" enable syntax highlighting
-syntax enable
-
-" mark text after the 80th column in red
-highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-match OverLength /\%81v.\+/
-
-set ignorecase
-set smartcase
-
 if has('win32')
     augroup templates
         autocmd BufNewFile *.tex 0r $HOME\dotfiles\templates\latex-template.tex
@@ -222,3 +240,17 @@ noremap <Leader>m :make\|redraw!<CR>
 
 " <Leader>pc to set makeprg to pandoc
 noremap <Leader>pc :SetMake pandoc % -o .pdf<Left><Left><Left><Left>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" MONSTRANDUM SETTINGS
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+function! s:presentation_start ()
+    Goyo x25
+
+    noremap <buffer> <Left>  :PrevSlide<CR>
+    noremap <buffer> <Right> :NextSlide<CR>
+    noremap <buffer> q       :EndPresentation<CR>
+endfunction
+
+autocmd! User PresentationStart call s:presentation_start()

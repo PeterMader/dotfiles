@@ -1,7 +1,7 @@
 # ignore the netrw history file
 .vim/.netrwhist
 
-# ignore sessions
+# ignore vim sessions
 .vim/sessions/*
 
 # ignore swap files
