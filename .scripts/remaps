@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# This script is called by i3 on startup.
+
+# Map CapsLock to Escape
+setxkbmap -option caps:escape

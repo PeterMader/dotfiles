@@ -198,6 +198,11 @@ augroup easy_close
     " be typed on many keyboards
     autocmd FileType help nnoremap <buffer> <c-t> <c-]>
 augroup END
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" AUTOMATION
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 if has('win32')
     augroup templates
         autocmd BufNewFile *.tex 0r $HOME\dotfiles\templates\latex-template.tex
@@ -214,32 +219,46 @@ endif
 
 function! s:set_makeprg (...)
     let prg = join(a:000)
-    let prgescaped = substitute(join(a:000), ' ', '\\ ', 'g')
+    let prgescaped = substitute(prg, ' ', '\\ ', 'g')
     exe "setlocal makeprg=" . prgescaped
     echo "'makeprg' set to '" . prg . "'"
 endfunction
 
-function! ToggleAutoBuild()
-    if !exists('#AutoBuild#BufWritePost')
-        augroup AutoBuild
-            autocmd! * <buffer>
-            autocmd BufWritePost <buffer> exe "make\|redraw!"
-        augroup END
-    else
-        augroup AutoBuild
-            autocmd!
-        augroup END
-    endif
+function! s:make_async ()
+    update
+    AsyncRun -program=make
+    " execute "AsyncRun " . &makeprg
+    copen
+    wincmd p
 endfunction
 
-command! AutoBuild call ToggleAutoBuild()
-command! -nargs=1 SetMake call s:set_makeprg(<f-args>)
+command! -complete=file -nargs=* SetMake call s:set_makeprg(<f-args>)
+command! MakeAsync call s:make_async()
 
-noremap <Leader>ab :AutoBuild<CR>
-noremap <Leader>m :make\|redraw!<CR>
+noremap <Leader>s :SetMake<Space>
+noremap <Leader>m :MakeAsync<CR>
 
-" <Leader>pc to set makeprg to pandoc
-noremap <Leader>pc :SetMake pandoc % -o .pdf<Left><Left><Left><Left>
+" function! ToggleAutoBuild()
+"     if !exists('#AutoBuild#BufWritePost')
+"         augroup AutoBuild
+"             autocmd! * <buffer>
+"             autocmd BufWritePost <buffer> exe "make\|redraw!"
+"         augroup END
+"     else
+"         augroup AutoBuild
+"             autocmd!
+"         augroup END
+"     endif
+" endfunction
+" 
+" command! AutoBuild call ToggleAutoBuild()
+" command! -nargs=1 SetMake call s:set_makeprg(<f-args>)
+" 
+" noremap <Leader>ab :AutoBuild<CR>
+" noremap <Leader>m :make\|redraw!<CR>
+" 
+" " <Leader>pc to set makeprg to pandoc
+" noremap <Leader>pc :SetMake pandoc % -o .pdf<Left><Left><Left><Left>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MONSTRANDUM SETTINGS

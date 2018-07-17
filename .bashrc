@@ -112,7 +112,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# diable Software Flow Control (XON/XOFF flow control)
+# disable Software Flow Control (XON/XOFF flow control)
 # this "feature" makes Ctrl-s cause vim to hang
 # and you would only be able to get out using Ctrl-q
 stty -ixon
